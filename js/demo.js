@@ -1,12 +1,7 @@
 var test = { "mappings": {
                         "doc": {
-                            "_all": {
-                                "enabled": false
-                            },
                             "properties": {
-                                "my_attachment": { "type": "attachment" }
-                            }}}
-          };
+                                "my_attachment": { "type": "attachment" }}}}};
 var loaded = true;
 //$("#loadindex").click(function(){
 //Indexing document
@@ -58,7 +53,7 @@ for (var i = 0; i < files.length; i++) {
                 contentType: "application/json; charset=utf-8",
                 success: function (msg)
                 {
-                    console.log("the json is "+ msg._index + msg._type + msg._id);
+                   console.log("the json is "+ msg._index + msg._type + msg._id);
                  //   console.log(msg);
                 },
                 error: function (err)
@@ -76,21 +71,20 @@ document.getElementById('file-select').addEventListener('change', handleFileSele
 
 /*$.ajax({
     type: "GET",
-    async: false,
     dataType: "json",
-    url: "http://localhost:9200/twitter/tweet/9",
+    url: "http://localhost:9200/trying-out-mapper-attachments/doc/",
     success: function(data){
         //alert(JSON.stringify(data));
-        console.log(JSON.stringify(data) + "data");
+        console.log(JSON.stringify(data.title));
     }
 });*/
 
 //Suche nach Dokumente mit dem Ti
 
-/*$("#searchText").val()*/
+
 $("#searchButton").click(function(){
-    //var query = {"explain": true, "query": {"match": {"cv": "dri" }}};
-    var query = {"explain": true, "query": { "query_string":  {"default_field" : "my_attachment.content", "query": "Dri" }}};
+  //  var query = {"explain": true, "query": {"match": {"my_attachment._content": "Dri" }}};
+    var query = {"explain": true,"query": { "query_string": {"query": $("#searchText").val()}}};
 
     $.ajax({
         type: "POST",
@@ -115,6 +109,6 @@ var renderResultList = function(data){
 console.log(i._score);
 
                 $("#newList").append("<li id='listItem" + l + "'" + "class='list-group-item'>"+ i._source.title +"</li>");
-                $("#listItem" + l).append("<span class='label label-default label-pill pull-right'>" + 14 + "</span>");
+                $("#listItem" + l).append("<span class='label label-default label-pill pull-right'>" + i._score + "</span>");
  });
 };
