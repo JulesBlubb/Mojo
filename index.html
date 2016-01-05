@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <title>Dokumentenanalyse</title>
+
+    <!-- Document Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+
+    <!-- Icon in Tab -->
+   <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAALCEhCXIqKguHKioLhyoqC4cqKguHKioLhyoqC4cqKguHKioLhyoqC4cqKguHISEJcgAAACwAAAASAAAACQAAABY4OBeC///////////////////+//7+/f/+/vz//f37//39+v/8/Pj//v75/zg4F4IAAAAWAAAACQAAAAA4OB0ASUkme////////////v7+//39/P/9/fv//Pz5//v7+P/6+vb/+Pj0//v79v9JSSZ7ODgdAAAAAAA/PyQAVFQvAFRUL3f//////5lm//39/P/MzLv/3d3M/93dzP/i4tf/+Pj0//f38v/7+/X/VFQvd1RULwA/PyQAWFgzAFhYMwBYWDN2///+//39/P/9/fv//Pz5//v7+P/6+vb/+Pj0//f38v/29vD/+vrz/1hYM3ZYWDMAWFgzAFxcNwBcXDcAXFw3dP7+/f93d3f//Pz5/8zMu//b28r/0dHA/9jYx//W1sX/9fXu//r68v9cXDd0XFw3AFxcNwBhYToAYWE6AGFhOnL+/vz//Pz5//v7+P/6+vb/+Pj0//f38v/29vD/9fXu//T07P/5+e//YWE6cmFhOgBhYToAZWU+AGVlPgBlZT5x/f37//+ZZv/6+vb/ycm4/9jYx//W1sX/3NzQ//T07P/x8ef/9/fq/2VlPnFlZT4AZWU+AGlpQgBpaUIAaWlCb/39+v/6+vb/+Pj0//f38v/29vD/9fXu//T07P/x8ef/7Ozf//T05f9paUJvaWlCAGlpQgBtbUUAbW1FAG1tRW38/Pj/bnHC//f38v/Nzbz/1NTD/8rKuf/R0cD/z8++/9bWxf/z8+L/bW1FbW1tRQBtbUUAcXFIAHFxSABxcUhs/Pz3//f38v/29vD/9fXu//T07P/x8ef/7Ozf/+jo2f/m5tX/8vLh/3FxSGxxcUgAcXFIAHR0TAB0dEwAdHRMa/v79v8iqjP/9fXu/8LCsf/R0cD/7Ozf/+jo2f/m5tX/5eXU//Ly4f90dExrdHRMAHR0TAB3d04Ad3dOAHd3Tmn6+vT/9fXu//T07P/x8ef/7Ozf/+jo2f/m5tX/pKST/6Skk/+kpJP/SUklfElJJQBJSSUAenpRAHp6UQB6elFo+vrz//T07P/x8ef/7Ozf/+jo2f/m5tX/5eXU/7a2pf//////enpRaHp6USV5eVAAeXlQAH19UwB9fVMAfX1TZ/z89f/5+e//9vbq//T05f/z8+L/8vLh//Ly4f/CwrH/fX1TZ319UyV6elEAeXlQAHl5UAB+flQAfn5UAH9/VU1/f1Vmf39VZn9/VWZ/f1Vmf39VZn9/VWZ/f1Vmf39VZn9/VSR9fVMAenpRAHl5UAB5eVAA4AcAAMADAADgBwAA4AcAAOAHAADgBwAA4AcAAOAHAADgBwAA4AcAAOAHAADgBwAA4AcAAOAPAADgHwAA//8AAA==" rel="icon" type="image/x-icon" />
+
+  </head>
+  <body>
+
+    <div class="documentsearch">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-push-3 bd-content">
+
+            <div class="jumbotron" id="content">
+              <div id="heading">
+                <h2>Dokumentenanalyse <i class="fa fa-file-text-o"></i></h2>
+              </div>
+
+              <div id="fileupload">
+                <div id="desciption">
+                  <p class="text-capitalize">Willkommen! Bitte laden Sie zuerst Dokumente hoch. </br> <i> Akzeptiert sind: <b> .pdf </b> </i> </p>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <span class="btn btn-default btn-file">
+                        Hinzufügen <input id="file-select" type="file" multiple="">
+                      </span>
+                    </span>
+                    <input type="text" class="form-control" id="upload" readonly="">
+                  </div>
+                </div>
+
+              <div id="wordsearch">
+                <div id="desciption">
+                  <p class="text-capitalize">Vielen Dank! Nun können Sie die Dokumente durchsuchen.</p>
+                </div>
+
+                <form class="form-horizontal">
+                  <div class="form-group">
+                  <div class="col-md-12">
+
+                      <input type="text" class="form-control" value="" id="searchText" placeholder="Suchbegriff eingeben"/>
+                  </div>
+                  </div>
+                </form>
+              </div>
+
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <input type="button" value="Suchen" id="searchButton" class="col-sm-offset-9 col-sm-3 btn btn-success btn-md"></input>
+                  </div>
+		</form>
+
+                <div id="result">
+                   </div>
+            </div> <!-- jumbotron -->
+
+          </div>
+        </div>
+      </div> <!--container-->
+
+    </div>
+
+   <!-- Latest compiled and minified JavaScript -->
+ <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+ <script type="text/javascript">
+var suchenIsEmpty = true;
+
+$(function(){
+    $('#suchen').keyup(function(){
+        suchenIsEmpty = ($(this).val() == '');
+        $('#suchen').removeAttr('disabled');
+    });});
+
+</script>
+
+    <script src="js/demo.js"></script>
+    <script src="js/fileupload.js"></script>
+
+  </body>
+</html>
