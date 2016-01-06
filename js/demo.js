@@ -1,7 +1,12 @@
-var test = { "mappings": {
-                        "doc": {
-                            "properties": {
-                                "my_attachment": { "type": "attachment" }}}}};
+var test = { /* "settings" : {
+   "number_of_shards" : 1
+},*/ "mappings": {
+    "doc": {"_all": {
+        "enabled": false
+    },
+            "properties": {
+                "my_attachment": { "type": "attachment" }}}}};
+
 var loaded = true;
 //$("#loadindex").click(function(){
 //Indexing document
@@ -42,8 +47,6 @@ for (var i = 0; i < files.length; i++) {
                         "_content" : btoa(binaryString)
                      }
             };
-
-            //document.getElementById("base64textarea").value = btoa(binaryString);
             $.ajax({
                 type: "POST",
                 //async: false,
@@ -81,16 +84,16 @@ document.getElementById('file-select').addEventListener('change', handleFileSele
 
 //Suche nach Dokumente mit dem Ti
 
-
+/* https://www.elastic.co/blog/understanding-query-then-fetch-vs-dfs-query-then-fetch */
 $("#searchButton").click(function(){
-  //  var query = {"explain": true, "query": {"match": {"my_attachment._content": "Dri" }}};
-    var query = {"explain": true,"query": { "query_string": {"query": $("#searchText").val()}}};
+   var query = {"query": {"match": {"my_attachment.content":  $("#searchText").val()}}};
+   // var query = {"explain": true,"query": { "query_string": {"default_field" : "my_attachment.content","query": $("#searchText").val()}}};
 
     $.ajax({
         type: "POST",
         //async: false,
         dataType: "json",
-        url: 'http://localhost:9200/trying-out-mapper-attachments/doc/_search?source=' + JSON.stringify(query),
+        url: 'http://localhost:9200/trying-out-mapper-attachments/doc/_search?search_type=dfs_query_then_fetch&source=' + JSON.stringify(query),
         success: function(data){
           //  console.log(data.hits.hits[0]._source.my_attachment._content);
            renderResultList(data);
@@ -101,14 +104,23 @@ $("#searchButton").click(function(){
     });
 });
 
+
 var renderResultList = function(data){
             $('#result').append("<ul id='newList' class='list-group'></ul>");
                 console.log(data);
 
     data.hits.hits.forEach(function(i, l) {
-console.log(i._score);
-
-                $("#newList").append("<li id='listItem" + l + "'" + "class='list-group-item'>"+ i._source.title +"</li>");
+        console.log(i._score);
+        //if(l%5){
+                $("#newList").append("<li id='listItem" + l + "'" + "class='list-group-item'><a data-toggle='modal' data-target='#mymodal" + l + "'" + "id='clickedItem" + l + "'" + ">" + i._source.title +"</a></li>");
                 $("#listItem" + l).append("<span class='label label-default label-pill pull-right'>" + i._score + "</span>");
+        renderContent(i,l);
+       // }
  });
+};
+
+var renderContent = function(i,l){
+    $('#clickedItem' + l).on("click", function(){
+        $("#docContentModal").append("<div class='modal fade' tabindex='-1' role='dialog' id='mymodal" + l + "'" + "><div class='modal-dialog'><div class='modal-content' id='modal-content'><div class='modal-header' id='modal-header" + l +"'" + "><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>" + i._source.title + "</h4></div> <div class='modal-body'> <p>"+ atob(i._source.my_attachment._content)  + "</p></div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div> </div></div></div>");
+});
 };
