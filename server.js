@@ -26,7 +26,7 @@ var responseHandler = function(res) {
 
 
 var queryfn = function(res, query_string) {
-    var query = {"query": {"match": {"my_attachment.content":  query_string}}};
+    var query = {"from" : 0, "size" : 100, "query": {"match": {"my_attachment.content":  query_string}}};
 
 
     var index = "documentsearch";
