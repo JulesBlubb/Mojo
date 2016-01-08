@@ -10,8 +10,10 @@
 	-curl -XPUT ""
   gegebenfalls auch zum löschen des Index den Befehl mit "-XDELETE" ausführen.
 
-- Node server Starten und die *.html auf der Adresse: "http://localhost:8000/"
-  ausführen.(Port:8000 ist default mäßig im Projekt eingestellt)
+- Node Starten: in der Konsole den Befehl "node" ausführen, falls Befehl nicht bekannt, muss node.js installiert werden.(siehe https://nodejs.org/en) 
+- Node Server Starten: in der Konsole in den Pfad der Projectdatei "*/server.js" gehen und den Befehl "node server.js" ausführen.
+
+- Browser öffnen, und die Adresse: "http://localhost:8000/" ausführen.(Port:8000 ist default mäßig im Projekt eingestellt)
 
 Vielen Dank und viel Spaß beim testen,
 
