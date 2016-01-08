@@ -10,8 +10,8 @@
 	-curl -XPUT ""
   gegebenfalls auch zum löschen des Index den Befehl mit "-XDELETE" ausführen.
 
-- Node server Starten und die *.html in der auf der Adresse: "http://localhost:8000/"
-  ausführen.
+- Node server Starten und die *.html auf der Adresse: "http://localhost:8000/"
+  ausführen.(Port:8000 ist default mäßig im Projekt eingestellt)
 
 Vielen Dank und viel Spaß beim testen,
 
