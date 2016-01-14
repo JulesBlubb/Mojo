@@ -15,7 +15,7 @@
   
   gegebenfalls auch zum löschen des Index den Befehl mit: 
   
-  "curl -XDELETE 'http://localhost:9200/documentsearch/'"
+  -curl -XDELETE 'http://localhost:9200/documentsearch/'
  
  ausführen.
 
