@@ -7,7 +7,7 @@
 
 - der Index in elasticsearch muss manuel ausgeführt werden:
   in der Komandozeile Pfad auswählen und den Befehl:
-	-curl -XPUT 'http://localhost:9200/documentsearch' '{
+	-curl -XPUT '' '{
     "mappings": {
         "doc": {
             "properties": {
