@@ -7,7 +7,8 @@
 - der Index in elasticsearch muss manuel erstellt werden:
   in der Komandozeile Pfad auswählen und den Befehl:
 
-```	curl -XPUT 'http://localhost:9200/documentsearch' -d '{
+```	
+curl -XPUT 'http://localhost:9200/documentsearch' -d '{
     "mappings": {
         "doc": {
             "properties": {
@@ -15,9 +16,9 @@
   ```
   
   gegebenfalls auch zum löschen des Index den Befehl mit: 
-  
+  ```
   curl -XDELETE 'http://localhost:9200/documentsearch/'
- 
+ ```
  ausführen.
 
 - Node Starten: in der Konsole den Befehl "node" ausführen, falls Befehl nicht bekannt, muss node.js installiert werden.(siehe https://nodejs.org/en) 
