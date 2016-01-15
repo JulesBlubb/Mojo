@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <title>noSQL - Dokumentenanalyse</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+      <meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+
+	  <link rel="stylesheet" href="css/reveal.css"/>
+ 	  <link rel="stylesheet" href="css/theme/sky.css" id="theme"/>
+
+
+	  <!-- Code syntax highlighting -->
+	  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+	    <!-- Printing and PDF exports -->
+	    <script>
+	      var link = document.createElement( 'link' );
+	      link.rel = 'stylesheet';
+	      link.type = 'text/css';
+	      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+	      document.getElementsByTagName( 'head' )[0].appendChild( link );
+	    </script>
+	  </head>
+
+	  <body>
+
+	    <div class="reveal">
+
+	      <!-- Titelfolie und Agenda-->
+	      <div class="slides">
+		<section data-background="titelbild.png" data-state="intro" class="intro">
+		  <h2><b>Dokumentenanalyse </br> Team Mojo</b></h2>
+
+		<h3>Juliane Weilbach und </br> Driton Goxhufi</h3>
+	      <p><small>15.01.2016</small></p>
+	    </section>
+
+	    <section data-background="titelbild.png">
+	      <h2>Agenda</h2>
+	      <ul>
+		<li>Technologien</li>
+                <li>Queries</li>
+		<li>Livedemo</li>
+		<li>Probleme</li>
+		<li>Ausblick</li>
+	      </ul>
+              <aside class="notes">
+                <li> Dokumentenalyse gewählt --> Lernzweck </li>
+                <li> Wie haben wir gearbeitet? Pairprogramming </li>
+              </aside>
+	    </section>
+
+	    <!-- Technologien, Frontend-Backend -->
+	    <section data-background="titelbild.png">
+              <section>
+		<h2>Technologien</h2>
+		<ul>
+		  <li>Frontend</li>
+		  <li>Backend</li>
+                  <aside class="notes">
+                  </aside>
+		</ul>
+              </section>
+              <section>
+		<h2>Frontend</h2>
+                <ul>
+		  <li> Bootstrap </li>
+                  <li> Jquery </li>
+                </ul>
+              </section>
+	      <section>
+		<h2>Backend</h2>
+                <ul>
+		  <li> Node.js </li>
+                  <li> Apache </li>
+		  <li> Elasticsearch-Plugin: Mapper Attachement </li>
+		  <li> FileReader API </li>
+                </ul>
+                <aside class="notes">
+                  <li> um nur Hinzufügen oder Suche zu erlauben </li>
+                  <li> für statische Dateien; html,js,css </li>
+                  <li> um PDF,ODT etc hochladen zu können; base 64 Encoding </li>
+                  <li> um Dateien einzulesen </li>
+                </aside>
+              </section>
+            </section>
+
+	    <!-- add-Query -->
+            <section data-background="titelbild.png">
+              <section>
+                <h2>add-query</h2>
+                <pre><code>
+    $.ajax({
+        type: "POST",
+        url: 'http://localhost:8000/add',
+        data:  JSON.stringify(upload),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (msg)
+        {
+            console.log("the json is "+ msg._index + ", " + msg._type + ", " + msg._id);
+        },
+        error: function (err)
+        { console.log(err.responseText +" shitty");}
+    });
+                </code></pre>
+              </section>
+              <section>
+                <h2>add (Node-Code)</h2>
+                <code><pre>
+    var addfn = function(res, document) {
+        var index = "documentsearch";
+        var options = {
+            method: "POST",
+            host: 'localhost',
+            port: '9200',
+            path: '/' + index + '/doc/',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(document)
+            }
+        };
+
+        var post_req = http.request(options, responseHandler(res));
+        post_req.write(document);
+        post_req.end();
+    };
+                </code></pre>
+              </section>
+
+	    <!-- Search-Query -->
+              <section>
+                <h2>search-query</h2>
+                <pre><code>
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: 'http://localhost:8000/search/'+$("#searchText").val(),
+        success: function(data){
+            renderResultList(data);
+        },
+        error: function (err)
+        {console.log(err.responseText +" shitty");}
+    });
+                </code></pre>
+              </section>
+              <section>
+                <h2>search (Node-Code)</h2>
+                <code><pre>
+    var queryfn = function(res, query_string) {
+        var query = {"from" : 0, "size" : 100, "query": {"match": {"my_attachment.content":  query_string}}};
+
+
+        var index = "documentsearch";
+        var options = {
+            host: 'localhost',
+            port: '9200',
+            path: '/' + index + '/doc/_search?search_type=dfs_query_then_fetch&source=' + JSON.stringify(query)
+        };
+
+        http.request(options, responseHandler(res)).end();
+    };
+                </code></pre>
+              </section>
+	    </section>
+
+	    <!-- Livedemo -->
+	    <section data-background="titelbild.png">
+	      <h2>Livedemo</h2>
+            </section>
+
+            <!-- Probleme auf die wir gestoßen sind-->
+            <section data-background="titelbild.png">
+	      <h2>Probleme</h2>
+	      <ul>
+		<li>Scoring-IDF</li>
+                <img src="explain.png">
+		<li>Express</li>
+                </ul>
+                <aside class="notes">
+                  <li> Inverse Document Frequency, Sharding -> dfs query then fetch </li>
+                  <li> Node.js ohne Express </li>
+                </aside>
+              </section>
+
+              <section data-background="titelbild.png">
+	        <h2>Ausblick</h2>
+	        <ul>
+		  <li>Anzeige-Erweiterung: z.B. PDF.js</li>
+		  <li>Sucherweiterung: Language Analyzer</li>
+                </ul>
+                <aside class="notes">
+                  <li> um alle Formate die hochgeladen werden können auch anzeigen zu können </li>
+                  <li> um Stammwortsuche zu ermöglichen </li>
+                </aside>
+              </section>
+
+	      <section data-background="titelbild.png">
+                <img src="Fragen.jpg">
+	        </section>
+
+	        <section data-background="giphy.gif">
+	          <h3 style: color=white;><b>Vielen Dank für die Aufmerksamkeit!</b></h3>
+	        </section>
+	      </div>
+
+	    </div>
+
+	    <script src="lib/js/head.min.js"></script>
+	    <script src="/plugin/highlight/highlight.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
+	    <script src="js/reveal.js"></script>
+
+	    <script>
+
+	      // Full list of configuration options available at:
+	      // https://github.com/hakimel/reveal.js#configuration
+	      Reveal.initialize({
+	      controls: true,
+	      progress: true,
+	      history: true,
+	      center: true,
+
+	      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+	      // Optional reveal.js plugins
+	      dependencies: [
+	      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+	      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	      { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+	      { src: 'plugin/zoom-js/zoom.js', async: true },
+	      { src: 'plugin/notes/notes.js', async: true }
+	      ]
+	      });
+
+	    </script>
+          </body>
+        </html>
